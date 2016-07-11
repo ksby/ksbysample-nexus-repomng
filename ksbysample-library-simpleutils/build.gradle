@@ -1,0 +1,24 @@
+group 'ksbysample.library'
+
+apply plugin: 'java'
+apply plugin: 'groovy'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+compileJava.options.compilerArgs = ['-Xlint:all']
+compileTestGroovy.options.compilerArgs = ['-Xlint:all']
+compileTestJava.options.compilerArgs = ['-Xlint:all']
+
+jar {
+    baseName = 'ksbysample-webapp-simpleutils'
+    version = '1.0.0-SNAPSHOT'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    testCompile("org.spockframework:spock-core:1.0-groovy-2.4")
+}
