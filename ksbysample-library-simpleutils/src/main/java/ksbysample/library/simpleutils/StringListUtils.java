@@ -16,4 +16,15 @@ public class StringListUtils {
         return result;
     }
 
+    static public int sumStringLength(List<String> stringList) {
+        int result = 0;
+        if (stringList != null) {
+            result = stringList.stream()
+                    .mapToInt(s -> s == null ? 0 : s.length())
+                    .sum();
+        }
+
+        return result;
+    }
+
 }

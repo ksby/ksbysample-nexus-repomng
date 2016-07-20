@@ -20,4 +20,20 @@ class StringListUtilsTest extends Specification {
         ["a", null, "abc"]  || "1,0,3"
     }
 
+    @Unroll
+    def "sumStringLength(#stringList) --> #result"() {
+        expect:
+        StringListUtils.sumStringLength(stringList) == result
+
+        where:
+        stringList            || result
+        null                 || 0
+        [null]               || 0
+        ["a"]                || 1
+        ["テスト"]           || 3
+        ["a", "ab", "abc"]  || 6
+        ["a", null, "abc"]  || 4
+
+    }
+
 }
