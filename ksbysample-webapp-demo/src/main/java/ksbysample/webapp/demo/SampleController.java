@@ -17,4 +17,10 @@ public class SampleController {
         return StringListUtils.convertStringList2LengthCsv(Arrays.asList("a", "ab", "abc"));
     }
 
+    @RequestMapping("/sum")
+    @ResponseBody
+    public String sum() {
+        return Integer.toString(StringListUtils.sumStringLength(Arrays.asList("a", "ab", "abc")));
+    }
+
 }
