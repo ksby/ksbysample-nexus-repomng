@@ -31,7 +31,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 
-	compile('ksbysample.library:ksbysample-library-simpleutils:1.0-20160716.025552-1')
+	compile('ksbysample.library:ksbysample-library-simpleutils:1.0-SNAPSHOT')
 }
 
 
