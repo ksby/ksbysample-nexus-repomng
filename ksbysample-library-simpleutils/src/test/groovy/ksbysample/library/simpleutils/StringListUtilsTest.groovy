@@ -33,7 +33,21 @@ class StringListUtilsTest extends Specification {
         ["テスト"]           || 3
         ["a", "ab", "abc"]  || 6
         ["a", null, "abc"]  || 4
+    }
 
+    @Unroll
+    def "maxLengthString(#stringList) --> #result"() {
+        expect:
+        StringListUtils.maxLengthString(stringList) == result
+
+        where:
+        stringList            || result
+        null                 || Optional.empty()
+        [null]               || Optional.empty()
+        ["a"]                || Optional.of("a")
+        ["テスト"]           || Optional.of("テスト")
+        ["a", "ab", "abc"]  || Optional.of("abc")
+        ["a", null, "abc"]  || Optional.of("abc")
     }
 
 }

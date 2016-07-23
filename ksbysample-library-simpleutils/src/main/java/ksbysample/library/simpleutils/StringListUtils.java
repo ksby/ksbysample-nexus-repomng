@@ -1,7 +1,11 @@
 package ksbysample.library.simpleutils;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static java.util.Collections.reverseOrder;
+import static java.util.Comparator.comparing;
 
 public class StringListUtils {
 
@@ -22,6 +26,18 @@ public class StringListUtils {
             result = stringList.stream()
                     .mapToInt(s -> s == null ? 0 : s.length())
                     .sum();
+        }
+
+        return result;
+    }
+
+    static public Optional<String> maxLengthString(List<String> stringList) {
+        Optional<String> result = Optional.empty();
+        if (stringList != null) {
+            result = stringList.stream()
+                    .filter(s -> s != null)
+                    .sorted(comparing(String::length, reverseOrder()))
+                    .findFirst();
         }
 
         return result;
