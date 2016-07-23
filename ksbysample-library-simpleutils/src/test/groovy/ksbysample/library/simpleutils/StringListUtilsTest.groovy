@@ -50,4 +50,19 @@ class StringListUtilsTest extends Specification {
         ["a", null, "abc"]  || Optional.of("abc")
     }
 
+    @Unroll
+    def "minLengthString(#stringList) --> #result"() {
+        expect:
+        StringListUtils.minLengthString(stringList) == result
+
+        where:
+        stringList            || result
+        null                 || Optional.empty()
+        [null]               || Optional.empty()
+        ["a"]                || Optional.of("a")
+        ["テスト"]           || Optional.of("テスト")
+        ["a", "ab", "abc"]  || Optional.of("a")
+        ["abc", null, "a"]  || Optional.of("a")
+    }
+
 }

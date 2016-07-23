@@ -43,4 +43,16 @@ public class StringListUtils {
         return result;
     }
 
+    static public Optional<String> minLengthString(List<String> stringList) {
+        Optional<String> result = Optional.empty();
+        if (stringList != null) {
+            result = stringList.stream()
+                    .filter(s -> s != null)
+                    .sorted(comparing(String::length))
+                    .findFirst();
+        }
+
+        return result;
+    }
+
 }
