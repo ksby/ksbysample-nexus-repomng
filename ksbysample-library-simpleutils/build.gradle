@@ -1,5 +1,5 @@
 group 'ksbysample.library'
-version '1.0-SNAPSHOT'
+version '1.0-RELEASE'
 
 apply plugin: 'java'
 apply plugin: 'groovy'
