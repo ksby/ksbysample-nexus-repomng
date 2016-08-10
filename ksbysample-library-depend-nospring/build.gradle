@@ -1,0 +1,39 @@
+group 'ksbysample.library'
+version '1.0-RELEASE'
+
+apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'maven'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+compileJava.options.compilerArgs = ['-Xlint:all']
+compileTestGroovy.options.compilerArgs = ['-Xlint:all']
+compileTestJava.options.compilerArgs = ['-Xlint:all']
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile("org.apache.commons:commons-lang3:3.4")
+    testCompile("org.spockframework:spock-core:1.0-groovy-2.4")
+}
+
+uploadArchives {
+    def nexusUrl = "http://localhost:8081"
+    def nexusUsername = "admin"
+    def nexusPassword = "admin123"
+
+    repositories {
+        mavenDeployer {
+            repository(url: "${nexusUrl}/repository/maven-releases") {
+                authentication(userName: nexusUsername, password: nexusPassword)
+            }
+            snapshotRepository(url: "${nexusUrl}/repository/maven-snapshots") {
+                authentication(userName: nexusUsername, password: nexusPassword)
+            }
+        }
+    }
+}
