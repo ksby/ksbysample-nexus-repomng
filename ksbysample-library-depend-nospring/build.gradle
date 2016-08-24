@@ -1,0 +1,63 @@
+group 'ksbysample.library'
+version '1.2-RELEASE'
+
+apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'maven'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+compileJava.options.compilerArgs = ['-Xlint:all']
+compileTestGroovy.options.compilerArgs = ['-Xlint:all']
+compileTestJava.options.compilerArgs = ['-Xlint:all']
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile("org.apache.commons:commons-lang3:3.4")
+    testCompile("org.spockframework:spock-core:1.0-groovy-2.4")
+}
+
+javadoc {
+    options.charSet = 'UTF-8'
+    options.encoding = 'UTF-8'
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+uploadArchives {
+    def nexusUrl = "http://localhost:8081"
+    def nexusUsername = "admin"
+    def nexusPassword = "admin123"
+
+    repositories {
+        mavenDeployer {
+            repository(url: "${nexusUrl}/repository/maven-releases") {
+                authentication(userName: nexusUsername, password: nexusPassword)
+            }
+            snapshotRepository(url: "${nexusUrl}/repository/maven-snapshots") {
+                authentication(userName: nexusUsername, password: nexusPassword)
+            }
+            pom.withXml {
+                asNode().appendNode('name', 'Spring非依存のテストライブラリ ksbysample-library-depend-nospring')
+                asNode().appendNode('description', 'Spring には依存しないが他のライブラリに依存する共有ライブラリである')
+            }
+        }
+    }
+}

@@ -26,14 +26,13 @@ repositories {
 	maven { url "http://localhost:8081/repository/maven-public" }
 }
 
-
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
     testCompile('org.springframework.boot:spring-boot-starter-test')
 
-    compile('ksbysample.library:ksbysample-library-simpleutils:1.0-RELEASE')
+	compile('ksbysample.library:ksbysample-library-simpleutils:1.0-RELEASE')
+	compile('ksbysample.library:ksbysample-library-depend-nospring:1.1-RELEASE')
 }
-
 
 eclipse {
 	classpath {
