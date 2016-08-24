@@ -1,5 +1,5 @@
 group 'ksbysample.library'
-version '1.1-RELEASE'
+version '1.2-RELEASE'
 
 apply plugin: 'java'
 apply plugin: 'groovy'
@@ -53,6 +53,10 @@ uploadArchives {
             }
             snapshotRepository(url: "${nexusUrl}/repository/maven-snapshots") {
                 authentication(userName: nexusUsername, password: nexusPassword)
+            }
+            pom.withXml {
+                asNode().appendNode('name', 'Spring非依存のテストライブラリ ksbysample-library-depend-nospring')
+                asNode().appendNode('description', 'Spring には依存しないが他のライブラリに依存する共有ライブラリである')
             }
         }
     }
