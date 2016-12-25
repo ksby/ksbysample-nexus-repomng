@@ -39,12 +39,22 @@ dependencyManagement {
     }
 }
 
+bootRepackage {
+    enabled = false
+}
+
 dependencies {
     // dependency-management-plugin によりバージョン番号が自動で設定されるもの
     // Appendix A. Dependency versions ( http://docs.spring.io/platform/docs/current/reference/htmlsingle/#appendix-dependency-versions ) 参照
     compile("org.springframework.boot:spring-boot-autoconfigure")
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.aspectj:aspectjweaver")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
 
     // dependency-management-plugin によりバージョン番号が自動で設定されないもの、あるいは最新バージョンを指定したいもの
+    compile("org.apache.commons:commons-lang3:3.5")
+    compile("com.google.guava:guava:20.0")
+    testCompile("org.assertj:assertj-core:3.6.1")
 }
 
 javadoc {
