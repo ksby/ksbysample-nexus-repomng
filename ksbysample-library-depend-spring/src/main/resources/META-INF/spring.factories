@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+ksbysample.library.dependspring.config.RequestAndResponseLoggerAutoConfiguration
