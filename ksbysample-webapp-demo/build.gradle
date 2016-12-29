@@ -27,12 +27,16 @@ repositories {
 }
 
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-web')
     testCompile('org.springframework.boot:spring-boot-starter-test')
 
-	compile('ksbysample.library:ksbysample-library-simpleutils:1.0-RELEASE')
-	compile('ksbysample.library:ksbysample-library-depend-nospring:1.1-RELEASE')
-	compile('ksbysample.library:ksbysample-library-depend-spring:1.0.0-RELEASE')
+    compile('ksbysample.library:ksbysample-library-simpleutils:1.0-RELEASE')
+    compile('ksbysample.library:ksbysample-library-depend-nospring:1.1-RELEASE')
+    compile('ksbysample.library:ksbysample-library-depend-spring:1.1.0-RELEASE')
+}
+
+bootRun {
+    jvmArgs = ['-Dksbysample.library.request-and-response-logger.enabled=true']
 }
 
 eclipse {

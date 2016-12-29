@@ -23,10 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(Enclosed.class)
 public class RequestAndResponseLoggerAutoConfigurationTest {
 
-    @RunWith(SpringJUnit4ClassRunner.class)
-    @SpringApplicationConfiguration(classes = Application.class)
-    @WebAppConfiguration
-    public static class デフォルトの設定でのテスト {
+    public static abstract class TestBase {
 
         public MockMvc mvc;
 
@@ -41,6 +38,31 @@ public class RequestAndResponseLoggerAutoConfigurationTest {
             this.mvc = MockMvcBuilders.webAppContextSetup(this.context)
                     .build();
         }
+
+    }
+
+    @RunWith(SpringJUnit4ClassRunner.class)
+    @SpringApplicationConfiguration(classes = Application.class)
+    @WebAppConfiguration
+    public static class デフォルトの設定でのテスト extends TestBase {
+
+        @Test
+        public void ログが出力されない() throws Exception {
+            mvc.perform(get("/test"))
+                    .andExpect(status().isOk());
+            assertThat(capture.toString()).doesNotContain("[req][info  ] REQUEST_URI = /test");
+            assertThat(capture.toString()).doesNotContain("[res][info  ] RESPONSE_STATUS = 200");
+        }
+
+    }
+
+    @RunWith(SpringJUnit4ClassRunner.class)
+    @SpringApplicationConfiguration(classes = Application.class)
+    @WebAppConfiguration
+    @TestPropertySource(properties = {
+            "ksbysample.library.request-and-response-logger.enabled=true"
+    })
+    public static class enabledプロパティ設定時のテスト extends TestBase {
 
         @Test
         public void ログが出力される() throws Exception {
@@ -55,22 +77,11 @@ public class RequestAndResponseLoggerAutoConfigurationTest {
     @RunWith(SpringJUnit4ClassRunner.class)
     @SpringApplicationConfiguration(classes = Application.class)
     @WebAppConfiguration
-    @TestPropertySource(properties = {"ksbysample.library.request-and-response-logger.execution=execution(* ksbysample.library.dependspring..*.*(..))"})
-    public static class executionプロパティ設定時のテスト_出力される設定 {
-
-        public MockMvc mvc;
-
-        @Autowired
-        private WebApplicationContext context;
-
-        @Rule
-        public OutputCapture capture = new OutputCapture();
-
-        @Before
-        public void setUp() throws Exception {
-            this.mvc = MockMvcBuilders.webAppContextSetup(this.context)
-                    .build();
-        }
+    @TestPropertySource(properties = {
+            "ksbysample.library.request-and-response-logger.enabled=true"
+            , "ksbysample.library.request-and-response-logger.execution=execution(* ksbysample.library.dependspring..*.*(..))"
+    })
+    public static class executionプロパティ設定時のテスト_出力される設定 extends TestBase {
 
         @Test
         public void ログが出力される() throws Exception {
@@ -85,22 +96,11 @@ public class RequestAndResponseLoggerAutoConfigurationTest {
     @RunWith(SpringJUnit4ClassRunner.class)
     @SpringApplicationConfiguration(classes = Application.class)
     @WebAppConfiguration
-    @TestPropertySource(properties = {"ksbysample.library.request-and-response-logger.execution=execution(* ksbysample.webapp.lending.web..*.*(..))"})
-    public static class executionプロパティ設定時のテスト_出力されない設定 {
-
-        public MockMvc mvc;
-
-        @Autowired
-        private WebApplicationContext context;
-
-        @Rule
-        public OutputCapture capture = new OutputCapture();
-
-        @Before
-        public void setUp() throws Exception {
-            this.mvc = MockMvcBuilders.webAppContextSetup(this.context)
-                    .build();
-        }
+    @TestPropertySource(properties = {
+            "ksbysample.library.request-and-response-logger.enabled=true"
+            , "ksbysample.library.request-and-response-logger.execution=execution(* ksbysample.webapp.lending.web..*.*(..))"
+    })
+    public static class executionプロパティ設定時のテスト_出力されない設定 extends TestBase {
 
         @Test
         public void ログが出力されない() throws Exception {
